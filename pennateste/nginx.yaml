@@ -1,20 +1,20 @@
-apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: fellipe-nginx
+  namespace: teste
 spec:
   selector:
     matchLabels:
-      app: nginx
+      app: fellipe-nginx
   replicas: 1 # tells deployment to run 2 pods matching the template
   template:
     metadata:
-      namespace: teste
       labels:
-        app: nginx
+        app: fellipe-nginx
     spec:
       containers:
-        - name: nginx
-          image: nginx:latest
-          ports:
+      - name: fellipe-nginx
+        image: nginx:latest
+        ports:
         - containerPort: 80
