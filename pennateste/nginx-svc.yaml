@@ -9,7 +9,7 @@ spec:
   - name: http
     nodePort: 32000
     port: 80
-    targetPort: server
+    targetPort: 80
     protocol: TCP
   selector:
     app: fellipe-nginx
