@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       app: fellipe-nginx
-  replicas: 1 # tells deployment to run 2 pods matching the template
+  replicas: 3 # tells deployment to run 2 pods matching the template
   template:
     metadata:
       labels:
@@ -16,5 +16,12 @@ spec:
       containers:
       - name: fellipe-nginx
         image: nginx:latest
+        volumeMounts:
+          - mountPath: /usr/share/nginx/html
+            name: nginx-volume
+      volumes:
+        - name: nginx-volume
+          hostPath:
+            path: /var/nginx 
         ports:
         - containerPort: 80
