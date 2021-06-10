@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fellipe-nginx
+  namespace: teste
+spec:
+  selector:
+    matchLabels:
+      app: fellipe-nginx
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: fellipe-nginx
+    spec:
+      containers:
+      - name: fellipe-nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html/
+          name: teste-volume
+      volumes:
+      - name: teste-volume
+        hostPath: 
+          path: /var/nginx
+          type: DirectoryOrCreate 
