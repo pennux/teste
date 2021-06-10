@@ -15,4 +15,5 @@ spec:
       # directory location on host
       path: /var/nginx
       # this field is optional
-      type: Directory
+      type: DirectoryOrCreate
+      
