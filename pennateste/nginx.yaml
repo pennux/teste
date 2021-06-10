@@ -13,9 +13,8 @@ spec:
       labels:
         app: fellipe-nginx
     spec:
-    containers:
+      containers:
       - name: fellipe-nginx
         image: nginx:latest
-    ports:
-      - containerPort: 80
-
+        ports:
+        - containerPort: 80
