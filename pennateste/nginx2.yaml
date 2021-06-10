@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fellipe-nginx
-  namespace: teste
 spec:
   selector:
     matchLabels:
@@ -13,8 +12,16 @@ spec:
       labels:
         app: fellipe-nginx
     spec:
-    containers:
+      containers:
       - name: fellipe-nginx
         image: nginx:latest
-    ports:
-      - containerPort: 80
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: nginx-volume
+      volumes:
+      - name: nginx-volume
+        hostPath:
+          path: /var/nginx
+
+        ports:
+        - containerPort: 80
