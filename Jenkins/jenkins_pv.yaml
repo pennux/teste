@@ -12,7 +12,8 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: "/var/jenkins"
-    
+    type: DirectoryOrCreate
+
 # apiVersion: v1
 # kind: PersistentVolume
 # metadata:
