@@ -22,7 +22,11 @@ spec:
       serviceAccountName: jenkins
       containers:
       - name: jenkins
-        image: jenkins/jenkins:2.60.3-alpine
+        image: "keaz/jenkins-master:latest"
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: JAVA_OPTS
+          value: -Djenkins.install.runSetupWizard=false
         ports:
         - containerPort: 8080
           protocol: TCP
