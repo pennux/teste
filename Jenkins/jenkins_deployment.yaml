@@ -26,7 +26,7 @@ spec:
         imagePullPolicy: IfNotPresent
         env:
         - name: JAVA_OPTS
-          value: -Xmx2048m -Dhudson.slaves.NodeProvisioner.MARGIN=50 -Dhudson.slaves.NodeProvisioner.MARGIN0=0.85
+          value: $JENKINS_JAVA_CMD -Dhudson.model.DownloadService.noSignatureCheck=true $JENKINS_JAVA_OPTIONS -DJENKINS_HOME=$JENKINS_HOME -jar $JENKINS_WAR"
         ports:
         - containerPort: 8080
           protocol: TCP
