@@ -1,48 +1,41 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: jenkins
-  namespace: jenkins
+  labels:
+    app: jenkins
 spec:
+  selector:
+    matchLabels:
+      app: jenkins
   replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   template:
     metadata:
       labels:
-        app: master
+        app: jenkins
     spec:
+      serviceAccountName: jenkins
       containers:
-      - name: master
-        image: jenkins/jenkins:2.67
+      - name: jenkins
+        image: jenkins/jenkins:2.60.3-alpine
         ports:
         - containerPort: 8080
+          protocol: TCP
         - containerPort: 50000
-        readinessProbe:
-          httpGet:
-            path: /login
-            port: 8080
-          periodSeconds: 10
-          timeoutSeconds: 5
-          successThreshold: 2
-          failureThreshold: 5
-        env:
-        - name: JENKINS_OPTS
-          valueFrom:
-            secretKeyRef:
-              name: jenkins
-              key: options
-        - name: JAVA_OPTS
-          value: '-Xmx1400m'
+          protocol: TCP
         volumeMounts:
         - mountPath: /var/jenkins_home
           name: jenkins
-        resources:
-          limits:
-            cpu: 500m
-            memory: 1500Mi
-          requests:
-            cpu: 500m
-            memory: 1500Mi
-        volumes:
-        - name: jenkins
-          persistentVolumeClaim:
-            claimName: jenkins-claim
+      restartPolicy: Always
+      securityContext:
+        runAsUser: 0
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: jenkins
+        persistentVolumeClaim:
+          claimName: jenkins-claim
